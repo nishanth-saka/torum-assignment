@@ -7,11 +7,11 @@ import FlatListRowLabels from './FlatListRowLabels';
 
 function FlatListRow(props) {   
 
-  console.log(``);
-  console.log(``);
-  console.log(`FlatListRow props`);
-  console.log(props);
-  console.log(``);
+  // console.log(``);
+  // console.log(``);
+  // console.log(`FlatListRow props`);
+  // console.log(props);
+  // console.log(``);
   
   const _keyExtractor = useCallback(
     (item, index) => `${index}`,

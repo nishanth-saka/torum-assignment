@@ -42,24 +42,23 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
   const onViewableItemsChanged = useRef(({ viewableItems, changed }) => {
       let _currentViewIndex = _.last(viewableItems)?.index;
       
-      console.log(``);
-      console.log(`_currentViewIndex: `);
-      console.log(_currentViewIndex);
-      console.log(``);
+      // console.log(``);
+      // console.log(`_currentViewIndex: `);
+      // console.log(_currentViewIndex);
+      // console.log(``);
 
       if(_currentViewIndex){
           setViewIndex(_currentViewIndex);
       }
   })
 
-  console.log(``);
-  console.log(``);
-  console.log(`FlatListComponent data:`);
-  console.log(`data:`);
-  console.log(data);
-  console.log(``)
+  // console.log(``);
+  // console.log(``);
+  // console.log(`FlatListComponent data:`);
+  // console.log(`data:`);
+  // console.log(data);
+  // console.log(``)
 
-    const _flattenData = data?.pages?.map(page => page.results).flat();
     return (
       <View style={FlatListStyles.container}>
         {(isLoading) && <Text  style={FlatListStyles.headerText1}>Loading...</Text>}

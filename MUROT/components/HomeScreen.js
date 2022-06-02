@@ -18,36 +18,14 @@ export default function HomeScreen() {
   var _FlatListRef = useRef();
   const [showLoadMore, setLoadMore] = useState(false)
   const queryClient = useQueryClient();
+ 
   
-  // const _query = useQuery('todos', async ({ signal }) => {
-  //   const todosResponse = await fetch('/todos', {
-  //     // Pass the signal to one fetch
-  //     signal,
-  //   })
-  //   const todos = await todosResponse.json();
-  
-  //  const todoDetails = todos.map(async(details, index) => {
-  //   const response = await fetch(details, {      
-  //     signal,
-  //   })
-  //   return response.json()
-  //  })
-  
-  //   return Promise.all(todoDetails)
-  // }
-
-
-  
-  // const _fetchData =  async ({ pageParam = 0 }) => {
-  //   const todosResponse = await fetch(`https://api.coincap.io/v2/assets?limit=10&offset=1`).then((res) => {
-  //     return res.json();
-  //   })
-
-  //   return Promise.all(todosResponse)
-  // }
-  
-  const _fetchData =  ({ pageParam = 0 }) =>  fetch(`https://api.coincap.io/v2/assets?limit=10&offset=1`).then((res) => {return res.json();})
-  
+  const _fetchData =  ({ pageParam = 0 }) =>  
+  fetch(`https://api.coincap.io/v2/assets?limit=10&offset=${pageParam}`).then(async(response) => {
+    const results = await response.json();
+    return { results, nextPage: pageParam + 1, totalPages: 5 };
+    // return  res.json();
+  })
 
   const {
     isLoading, 
@@ -72,14 +50,15 @@ export default function HomeScreen() {
     
 
   const _flattenData = data?.pages?.map(page => {
-    return page.data
+    console.log(``);
+    console.log(`page:`);
+    console.log(page?.results?.data);
+    console.log(``);
+    return page?.results?.data
   }).flat();
 
-  console.log(``);
-  console.log(``);
-  console.log(`_flattenData:`);
-  console.log(_flattenData);
-  console.log(``)
+ 
+
 
   return (
     <View style={FlatListStyles.container}>
