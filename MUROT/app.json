@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "MUROT",
+    "slug": "MUROT",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
