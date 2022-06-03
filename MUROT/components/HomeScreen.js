@@ -26,8 +26,7 @@ export default function HomeScreen() {
   const _fetchData =  ({ pageParam = 0 }) =>  
   fetch(`https://api.coincap.io/v2/assets?limit=10&offset=${pageParam}`).then(async(response) => {
     const results = await response.json();
-    return { results, nextPage: pageParam + 1, totalPages: 5 };
-    // return  res.json();
+    return { results, nextPage: pageParam + 1, totalPages: 5 };    
   })
 
   const {
@@ -47,6 +46,11 @@ export default function HomeScreen() {
       }
       return lastPage;
     },
+    refetchIntervalInBackground: (() => {
+      console.log('REFETCH!')
+    }),
+    refetchInterval: 2000,
+    // staleTime: 3000,
     // keepPreviousData: true,
     // cacheTime: 1000 * 60 * 60 * 24,
   })
@@ -65,10 +69,7 @@ export default function HomeScreen() {
 
   const _flattenData = data?.pages?.map(page => {
     
-    // console.log(``);
-    // console.log(`page:`);
-    // console.log(page?.results?.data);
-    // console.log(``);
+    
     
     return page?.results?.data
   }).flat();

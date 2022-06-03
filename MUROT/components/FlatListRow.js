@@ -1,18 +1,20 @@
-import React, {memo, useCallback} from 'react'
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import React, {memo, useCallback, useRef} from 'react'
+import { Animated, TouchableOpacity } from 'react-native'
 import FlatListRowPreviewImage from './FlatListRowPreviewImage'
 import FlatListRowProfileImage from './FlatListRowProfileImage'
 import FlatListStyles from './FlatListStyles'
 import FlatListRowLabels from './FlatListRowLabels';
+import { useEffect } from 'react/cjs/react.production.min'
+
+const propsAreEqual = (preItem, nextItem) => {
+  return preItem.item?.priceUsd === nextItem.item?.priceUsd;
+  // return true;
+}
 
 function FlatListRow(props) {   
 
-  // console.log(``);
-  // console.log(``);
-  // console.log(`props?.index`);
-  // console.log(props?.index);
-  // console.log(``);
-  
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
   const _keyExtractor = useCallback(
     (item, index) => `${index}`,
     []
@@ -25,20 +27,25 @@ function FlatListRow(props) {
     // console.log(``);
   }
 
+ 
+console.log(``);
+console.log(`item?.price:`);
+console.log(props?.item?.priceUsd);
+console.log(``);
+
+
     return (      
-        <TouchableOpacity key={_keyExtractor} style={FlatListStyles.row}
-          onPress={_rowSelect}
-        >
-          {/* <Text style={FlatListStyles.headerText1}>{`${props?.item?.name}: ${props?.item?.price}`}</Text> */}
-          
-          <FlatListRowPreviewImage {...props} />
-          <FlatListRowLabels {...props} />
-          
-          <FlatListRowProfileImage {...props} />
-          
-          
-      </TouchableOpacity>     
+        
+          <TouchableOpacity key={_keyExtractor} 
+            onPress={_rowSelect} style={FlatListStyles.row}
+          >
+            <FlatListRowPreviewImage {...props} />
+            <FlatListRowLabels {...props} />            
+            <FlatListRowProfileImage {...props} />
+
+        </TouchableOpacity>     
+      
     ) 
 }
 
-export default memo(FlatListRow)
+export default memo(FlatListRow, propsAreEqual)

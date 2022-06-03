@@ -25,10 +25,10 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
             // this.fetchData();
             if(hasNextPage){
               
-              console.log(``);
-              console.log(`viewIndex: `);
-              console.log(viewIndex);
-              console.log(``);
+              // console.log(``);
+              // console.log(`viewIndex: `);
+              // console.log(viewIndex);
+              // console.log(``);
 
               setLoadNext(!loadNext);
             }
@@ -42,14 +42,19 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
       )
     
     const _renderItem = useCallback(({item, index}) => {    
-          const _data =  [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100
-        ];
+          var _data =  [];
+
+        const k = 100;
+        var price = item?.priceUsd;        
+        
+        var range = _.range(price - k/2,price + k/2);
+        
+        range = _.shuffle(range);        
+        var slice = range.length > 20 ? range.length/10 : 5;
+        _data = _.slice(range, range.length - slice, range.length );
+        _data = [..._data];
+
+
         return <FlatListRow 
         item={item} 
         index={index} 
@@ -101,9 +106,10 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
                 onEndReachedThreshold={0.5}
                 onEndReached={_loadMore}   
                 data={data}     
-                onMomentumScrollBegin={_onMomentumScrollBegin}       
-                                                      
-                />
+                onMomentumScrollBegin={_onMomentumScrollBegin}                     
+                stickyHeaderIndices={[0]}
+              />
+
             <TouchableOpacity style={[FlatListStyles.btn, {display: isFetchingNextPage ? 'flex' : 'none'}]}
                 onPress={(args) => {
 

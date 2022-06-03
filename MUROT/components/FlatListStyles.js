@@ -19,7 +19,9 @@ const styles = new StyleSheet.create({
       justifyContent: 'center'
     },
     'header': {
-      height: 20,
+      height: 40,
+      backgroundColor: "#C80435",
+      justifyContent:'center'
     },
     'headerText1': {
       color: "#fff",      
@@ -61,7 +63,7 @@ const styles = new StyleSheet.create({
     'rowLabels':{
       flex: 1,
       flexDirection: "column",
-      backgroundColor: "#2A292D",
+      
       left: 10,
       top: 10,
       position: 'absolute',
@@ -69,7 +71,7 @@ const styles = new StyleSheet.create({
     },
     'overlay': {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'rgba(69,85,117,0.8)',
+      backgroundColor: 'rgba(63,63,70,0.9)',
     },
     'chart': {
       borderRadius: 10,

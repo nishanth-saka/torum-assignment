@@ -2,16 +2,12 @@ import React, {Suspense, useCallback, memo} from 'react'
 import { View, Text, Animated, Image, Easing } from 'react-native'
 import FlatListStyles from './FlatListStyles'
 import FlatListChart from './FlatListSvgChart'
-
+import _ from 'lodash';
 // const FlatListChart = React.lazy(() => import("./FlatListChart.js"));
 
-const areEqual =  (prevProps, nextProps) => {
-  /*
-  return true if passing nextProps to render would return
-  the same result as passing prevProps to render,
-  otherwise return false
-  */
-  return true;
+const propsAreEqual = (preItem, nextItem) => {
+  return preItem.item?.priceUsd === nextItem.item?.priceUsd;
+  // return true;
 }
 
 function FlatListRowLabels(props) {
@@ -21,15 +17,17 @@ function FlatListRowLabels(props) {
     )   
 
   
-
+    var data = props?.chartData;
+        
+    var _isGreen = _.first(data) >= _.last(data);
 
 console.log(``);
-console.log(`props?.index: ${props?.index}`);
+console.log(`props?.index: ${props?.item?.priceUsd}`);
 console.log(``);
 
   return (
     <View key={`${props?.index}`} style={FlatListStyles.rowLabels}>
-        <Text style={FlatListStyles.headerText1}>{`#${props?.index}: ${props?.item?.name}`}</Text>
+        <Text style={[FlatListStyles.headerText1, {color:  !_isGreen ? '#54D0B8' : '#C80435'}]}>{`#${props?.index}: ${props?.item?.name}`}</Text>
         <Text style={FlatListStyles.headerText2}>{`${props?.item?.price ?? props?.item?.priceUsd}`}</Text>
         
         <Suspense fallback={<Text>Loading</Text>}>
@@ -40,4 +38,4 @@ console.log(``);
   )
 }
 
-export default memo(FlatListRowLabels, areEqual)
+export default memo(FlatListRowLabels, propsAreEqual)

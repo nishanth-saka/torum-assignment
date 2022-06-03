@@ -5,7 +5,7 @@ import FlatListStyles from './FlatListStyles';
 export default function FlatListHeader(props) {
     return (
         <View style={FlatListStyles.header}>
-          <Text>_FlatHeader</Text>
+          <Text style={FlatListStyles.headerText1}>_FlatHeader</Text>
         </View>
       )
 }
