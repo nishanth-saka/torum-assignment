@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createAsyncStoragePersistor } from 'react-query/createAsyncStoragePersistor-experimental'
 
+const REFRESH_INTERVAL = 8000;
 const sampleData = {
   id: "iLNPS0N_6J4",
   user: {profile_image: "https://images.unsplash.com/profile-1634227720022-77e396999fc8image?ixlib=rb-1.2.1&crop=faces&fit=crop&w=128&h=128"},
@@ -50,7 +51,7 @@ export default function HomeScreen() {
     refetchIntervalInBackground: (() => {
       console.log('REFETCH!')
     }),
-    refetchInterval: 2000,
+    refetchInterval: REFRESH_INTERVAL,
     // staleTime: 3000,
     // keepPreviousData: true,
     // cacheTime: 1000 * 60 * 60 * 24,

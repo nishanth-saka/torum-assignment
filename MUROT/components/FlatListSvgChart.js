@@ -17,9 +17,9 @@ class LineChartFlatList extends React.PureComponent {
         
         var _isGreen = _.first(data) >= _.last(data);
 
-        console.log(`ID: ${this.props?.item?.id}`);
-        console.log(`_.first(data): ${_.first(data)} _.last(data): ${_.last(data)}`);
-        console.log(``);
+        // console.log(`ID: ${this.props?.item?.id}`);
+        // console.log(`_.first(data): ${_.first(data)} _.last(data): ${_.last(data)}`);
+        // console.log(``);
 
         return (
             <LineChart

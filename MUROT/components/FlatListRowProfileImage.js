@@ -4,10 +4,10 @@ import FlatListStyles from './FlatListStyles'
 import _ from 'lodash';
 
 export default function FlatListRowProfileImage(props) {
-  console.log(``);
-  console.log(`props?.rowSelected: ${props?.rowSelected?.[0]}`, props?.rowSelected?.[0]);
-  console.log(`props?.item?.id: ${props?.index}`);
-  console.log(``);
+  // console.log(``);
+  // console.log(`props?.rowSelected: ${props?.rowSelected?.[0]}`, props?.rowSelected?.[0]);
+  // console.log(`props?.item?.id: ${props?.index}`);
+  // console.log(``);
 
   var _selectedRows = props?.rowSelected ?? [];
   var _showImage = _.findIndex(_selectedRows, function(o) { return o.id === props?.item?.id; });

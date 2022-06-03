@@ -79,6 +79,34 @@ const styles = new StyleSheet.create({
       padding: 10,
       margin: 10
     },
+    panelHeader: {
+      backgroundColor: "#ffffff",
+      paddingTop: 20,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderColor: "#ffffff",
+    },
+    panel: {
+      padding: 20,
+      backgroundColor: "#ffffff",
+      paddingTop: 20,
+      marginBottom: 0,
+    },
+    modalHeader: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalHeaderText: {
+      fontSize: 15,
+      fontFamily: "ubuntu-semibold",
+    },
+    panelHandle: {
+      width: 40,
+      height: 8,
+      borderRadius: 4,
+      backgroundColor: "#00000040",
+      marginBottom: 10,
+    },
 })
 
 export default styles;

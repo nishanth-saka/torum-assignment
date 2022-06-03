@@ -22,14 +22,18 @@ function FlatListRow(props) {
   )
 
   const _rowSelect = (arg1) => {
-    console.log(``);
-    console.log(`props:`);
-    console.log(props?.item);
-    console.log(``);
+   
 
     let _rows = props.rowSelected ?? [];
     _rows.push(props?.item)
-    props.setRowSelected(_.uniqBy([..._rows], 'id'))
+
+    console.log(``);
+    console.log(`setRowSelected ADD:`);
+    console.log(_rows?.length);
+    console.log(``);
+
+    props.setRowSelected(_.uniqBy([..._rows], 'id'));
+    props.setShowSheet(true);
   }
 
  

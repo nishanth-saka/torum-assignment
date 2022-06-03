@@ -6,6 +6,8 @@ import FlatListRow from './FlatListRow';
 import useDebounce from '../hooks/useDebounce';
 import _ from 'lodash';
 
+import FlatListDetails from './FlatListDetails';
+import useToggle from '../hooks/useToggle';
 
 function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPage, fetchNextPage, isFetchingNextPage}) {
     var _FlatListRef = useRef();
@@ -15,11 +17,12 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
     const [viewIndex, setViewIndex] = useState(0);
     const [rowSelected, setRowSelected] = useState([])
     const [loadNext, setLoadNext] = useState(0);
+    const [showSheet, setShowSheet] = useState(false);
 
   useEffect(() => {
     console.log(``);
-    console.log(`rowSelected Array:`);
-    console.log(rowSelected);
+    console.log(`useEffect-rowSelected Array:`);
+    console.log(rowSelected?.length);
     console.log(``);
   }, [rowSelected])
 
@@ -68,6 +71,7 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
         chartData={_data}
         rowSelected={rowSelected}
         setRowSelected={setRowSelected}
+        setShowSheet={setShowSheet}
         />
       }, [data])
 
@@ -122,7 +126,8 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
 
                 }} />  
         </>                
-        }  
+        } 
+        <FlatListDetails value={showSheet}/> 
       </View>
     )
 }
