@@ -9,6 +9,7 @@ import { QueryClient, useInfiniteQuery, useQuery, useQueryClient } from 'react-q
 
 
 import FlatListDetails from './FlatListDetails';
+import FlatListWallet from './FlatListWallet';
 
 function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPage, fetchNextPage, isFetchingNextPage}) {
 
@@ -33,6 +34,7 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
     const [rowSelected, setRowSelected] = useState([])
     const [loadNext, setLoadNext] = useState(0);
     const [showSheet, setShowSheet] = useState(false);
+    const [showWallet, setShowWallet] = useState(false);
     const [currentSelectedRow, setCurrentSelectedRow] = useState(null);
     const [currentSelectedCoin, setCurrentSelectedCoin] = useState(null);
 
@@ -121,7 +123,13 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
                 contentContainerStyle={FlatListStyles.listContainer}
                 ref={_FlatListRef}
                 onViewableItemsChanged={onViewableItemsChanged.current}
-                ListHeaderComponent={() => <FlatListHeader currentSelectedCoin={currentSelectedCoin} rowSelected={rowSelected} />}
+                ListHeaderComponent={() => <FlatListHeader 
+                  showSheet={showSheet} 
+                  showWallet={showWallet}
+                  setShowSheet={setShowSheet}
+                  setShowWallet={setShowWallet}
+                  currentSelectedCoin={currentSelectedCoin} 
+                  rowSelected={rowSelected} />}
                 keyExtractor={_keyExtractor}
                 renderItem={_renderItem}
                 onEndReachedThreshold={0.5}
@@ -138,6 +146,7 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
         </>                
         } 
         {showSheet && <FlatListDetails setShowSheet={setShowSheet} dataObject={currentSelectedRow} value={showSheet} getDataForGraph={_getDataForGraph}/> }
+        {showWallet && <FlatListWallet setShowWallet={setShowWallet} rowsSelected={rowSelected} value={showWallet} /> }
       </View>
     )
 }
