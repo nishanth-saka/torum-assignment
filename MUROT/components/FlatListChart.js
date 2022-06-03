@@ -1,5 +1,5 @@
-import React, {memo} from 'react'
-import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import React, {memo, useRef, useEffect} from 'react'
+import { View, Text, Animated } from 'react-native'
 import {
     LineChart,
     BarChart,
@@ -10,34 +10,59 @@ import {
   } from "react-native-chart-kit";
   import FlatListStyles from './FlatListStyles'
 
-function FlatListChart(props) {
-    const {viewIndex} = props;
-  console.log(``);
-  console.log(``);
-  console.log(`viewIndex:`);
-  console.log(viewIndex);
-  console.log(``);
-  console.log(``);
-  console.log(``);
+  const areEqual =  (prevProps, nextProps) => {
+    /*
+    return true if passing nextProps to render would return
+    the same result as passing prevProps to render,
+    otherwise return false
+    */
+    return true;
+  }
 
-  const _labels =  ["January", "February", "March", "April", "May", "June"];
-  const _data =   [
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100
-];
+function FlatListChart(props) {
+  // const {viewIndex} = props;
+  const _labels =  ["January", "February", "March", "April", "May", "June"];  
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    fadeIn();
+  })
+
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true 
+    }).start();
+  };
+
+  const fadeOut = () => {
+    // Will change fadeAnim value to 0 in 3 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 3000
+    }).start();
+  };
+
+  
+console.log(``);
+console.log(`FlatListChart props`);
+console.log(props?.chartData);
+console.log(``);
+
 
   return (
-    <View  style={FlatListStyles.chart}>
+    <Animated.View  style={[FlatListStyles.chart, {
+        opacity: fadeAnim
+      }]}>
         <Text>Bezier Line Chart</Text>
         <LineChart
             data={{
             labels: _labels,            
             datasets: [
-                {data:_data}
+                {data: props?.chartData}
             ]
             }}            
             width={300} // from react-native
@@ -55,7 +80,8 @@ function FlatListChart(props) {
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             labelColor: (opacity = 0) => `#dddccc00`,
             style: {
-                borderRadius: 16
+                borderRadius: 16,
+                flex: 1
             },
             propsForDots: {
                 r: "6",
@@ -69,8 +95,8 @@ function FlatListChart(props) {
             borderRadius: 16
             }}
         />
-    </View>
+    </Animated.View>
   )
 }
 
-export default memo(FlatListChart)
+export default memo(FlatListChart, areEqual)

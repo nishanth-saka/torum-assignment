@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 
+const ITEM_HEIGHT = 400;
 const styles = new StyleSheet.create({
     "container":{
         flex: 1,
@@ -12,26 +13,25 @@ const styles = new StyleSheet.create({
   },
     'row': {
       backgroundColor: "#C80435",
-      borderRadius: 10,
-      padding: 10,
+      borderRadius: 30,
       margin: 10,
+      height: ITEM_HEIGHT,
+      justifyContent: 'center'
     },
     'header': {
-      height: 40,
-      padding: 10,
-      backgroundColor:"#C80435"
+      height: 20,
     },
     'headerText1': {
       color: "#fff",      
-      fontSize: 22,      
+      fontSize: 20,      
     },
     'headerText2': {
       color: "#fff",      
-      fontSize: 33,      
+      fontSize: 25,      
     },
     'previewImage':{
       width: '100%',
-      height: 300,
+      height: ITEM_HEIGHT,
       borderRadius: 10,
       padding: 10,
     },

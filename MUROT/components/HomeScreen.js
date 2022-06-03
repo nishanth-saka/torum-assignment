@@ -3,7 +3,10 @@ import React, {useCallback, useMemo, useState, Suspense, useRef} from 'react'
 import { QueryClient, useInfiniteQuery, useQuery, useQueryClient } from 'react-query';
 import FlatListStyles from './FlatListStyles';
 import FlatListComponent from './FlatList';
-import axios from 'react-native-axios';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
+import { createAsyncStoragePersistor } from 'react-query/createAsyncStoragePersistor-experimental'
+
 const sampleData = {
   id: "iLNPS0N_6J4",
   user: {profile_image: "https://images.unsplash.com/profile-1634227720022-77e396999fc8image?ixlib=rb-1.2.1&crop=faces&fit=crop&w=128&h=128"},
@@ -44,16 +47,29 @@ export default function HomeScreen() {
       }
       return lastPage;
     },
-    staleTime: 10 * 60 * 1000
+    // keepPreviousData: true,
+    // cacheTime: 1000 * 60 * 60 * 24,
   })
+
+  const asyncStoragePersistor = createAsyncStoragePersistor({
+    storage: AsyncStorage
+  })
+  
+  // persistQueryClient({
+  //   queryClient,
+  //   persistor: asyncStoragePersistor,
+  // })
+ 
 
     
 
   const _flattenData = data?.pages?.map(page => {
-    console.log(``);
-    console.log(`page:`);
-    console.log(page?.results?.data);
-    console.log(``);
+    
+    // console.log(``);
+    // console.log(`page:`);
+    // console.log(page?.results?.data);
+    // console.log(``);
+    
     return page?.results?.data
   }).flat();
 

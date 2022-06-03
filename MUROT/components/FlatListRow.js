@@ -9,8 +9,8 @@ function FlatListRow(props) {
 
   // console.log(``);
   // console.log(``);
-  // console.log(`FlatListRow props`);
-  // console.log(props);
+  // console.log(`props?.index`);
+  // console.log(props?.index);
   // console.log(``);
   
   const _keyExtractor = useCallback(
@@ -18,8 +18,17 @@ function FlatListRow(props) {
     []
   )
 
+  const _rowSelect = (arg1) => {
+    // console.log(``);
+    // console.log(`props:`);
+    // console.log(props?.item);
+    // console.log(``);
+  }
+
     return (      
-        <View key={_keyExtractor} style={FlatListStyles.row}>
+        <TouchableOpacity key={_keyExtractor} style={FlatListStyles.row}
+          onPress={_rowSelect}
+        >
           {/* <Text style={FlatListStyles.headerText1}>{`${props?.item?.name}: ${props?.item?.price}`}</Text> */}
           
           <FlatListRowPreviewImage {...props} />
@@ -28,7 +37,7 @@ function FlatListRow(props) {
           <FlatListRowProfileImage {...props} />
           
           
-      </View>     
+      </TouchableOpacity>     
     ) 
 }
 

@@ -3,18 +3,37 @@ import { View, Text, FlatList, FlatListStylesheet, Image, TouchableOpacity } fro
 import FlatListHeader from './FlatListHeader';
 import FlatListStyles from './FlatListStyles';
 import FlatListRow from './FlatListRow';
+import useDebounce from '../hooks/useDebounce';
 import _ from 'lodash';
+
 
 function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPage, fetchNextPage, isFetchingNextPage}) {
     var _FlatListRef = useRef();
+    var onEndReachedCalledDuringMomentum = useRef(true);
+
     const [isScrolling, setIsScrolling] = useState(false);
     const [viewIndex, setViewIndex] = useState(0);
+    
+    const [loadNext, setLoadNext] = useState(0);
 
-    const _loadMore = () => {
-        if(hasNextPage){
-          fetchNextPage();
-            // setLoadMore(!showLoadMore);
-        }    
+    
+
+    useDebounce(() => fetchNextPage(), 1000, [loadNext])
+        const _loadMore = () => {
+
+          if(!onEndReachedCalledDuringMomentum.current){
+            // this.fetchData();
+            if(hasNextPage){
+              
+              console.log(``);
+              console.log(`viewIndex: `);
+              console.log(viewIndex);
+              console.log(``);
+
+              setLoadNext(!loadNext);
+            }
+            onEndReachedCalledDuringMomentum.current = true;
+        }            
       };
 
     const _keyExtractor = useCallback(
@@ -23,20 +42,25 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
       )
     
     const _renderItem = useCallback(({item, index}) => {    
+          const _data =  [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100
+        ];
         return <FlatListRow 
         item={item} 
         index={index} 
         isScrolling={isScrolling}
         viewIndex={viewIndex}
+        chartData={_data}
         />
       }, [data])
 
     const _onMomentumScrollBegin = () => {
-      setIsScrolling(true)
-    }
-
-    const _onMomentumScrollEnd = () => {
-      setIsScrolling(false)
+      onEndReachedCalledDuringMomentum.current = false;
     }
 
   const onViewableItemsChanged = useRef(({ viewableItems, changed }) => {
@@ -67,18 +91,18 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
             <FlatList 
                 initialNumToRender={3}
                 maxToRenderPerBatch={5}
-                removeClippedSubviews={false}
+                removeClippedSubviews={true}
                 contentContainerStyle={FlatListStyles.listContainer}
                 ref={_FlatListRef}
                 onViewableItemsChanged={onViewableItemsChanged.current}
                 ListHeaderComponent={FlatListHeader}
                 keyExtractor={_keyExtractor}
                 renderItem={_renderItem}
-                onEndReachedThreshold={0.4}
+                onEndReachedThreshold={0.5}
                 onEndReached={_loadMore}   
                 data={data}     
-                onMomentumScrollBegin={_onMomentumScrollBegin}                               
-                onMomentumScrollEnd={_onMomentumScrollEnd}                               
+                onMomentumScrollBegin={_onMomentumScrollBegin}       
+                                                      
                 />
             <TouchableOpacity style={[FlatListStyles.btn, {display: isFetchingNextPage ? 'flex' : 'none'}]}
                 onPress={(args) => {

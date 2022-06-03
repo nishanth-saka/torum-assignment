@@ -8,8 +8,6 @@ import { useEffect } from 'react/cjs/react.production.min';
 
 const queryClient = new QueryClient();
 export default function App() {
-
-
   return (
     <QueryClientProvider client={queryClient}>
       <NativeBaseProvider>
