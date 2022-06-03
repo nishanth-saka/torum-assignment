@@ -3,12 +3,6 @@ import { View, Text, FlatList, FlatListStylesheet, Image, TouchableOpacity } fro
 import FlatListStyles from './FlatListStyles'
 
 export default function FlatListRowPreviewImage(props) {
-
-  // console.log(``);
-  // console.log(`PREVIEW: `);
-  // console.log(`${props?.item?.urls?.small}`);
-  // console.log(``);
-
     return(
         <TouchableOpacity>
           

@@ -23,7 +23,7 @@ function FlatListRowLabels(props) {
 
   return (
     <View key={`${props?.index}`} style={FlatListStyles.rowLabels}>
-        <Text style={[FlatListStyles.headerText1, {color:  !_isGreen ? '#54D0B8' : '#C80435'}]}>{`#${props?.index}: ${props?.item?.name}`}</Text>
+        <Text style={[FlatListStyles.headerText1, {fontSize: 25, color:  !_isGreen ? '#54D0B8' : '#C80435'}]}>{`#${props?.index}: ${props?.item?.name}`}</Text>
         <Text style={FlatListStyles.headerText2}>{`${props?.item?.price ?? props?.item?.priceUsd}`}</Text>
         
         <Suspense fallback={<Text>Loading</Text>}>

@@ -47,10 +47,7 @@ export default function HomeScreen() {
         return lastPage.nextPage;
       }
       return lastPage;
-    },
-    refetchIntervalInBackground: (() => {
-      console.log('REFETCH!')
-    }),
+    },  
     refetchInterval: REFRESH_INTERVAL,
     // staleTime: 3000,
     // keepPreviousData: true,

@@ -8,6 +8,9 @@ const styles = new StyleSheet.create({
         width: '100%',
         backgroundColor: "#2A292D",
     },
+    "scrollContainer":{
+      flex: 1,
+  },
     "listContainer":{
       justifyContent: 'center'      
   },
@@ -20,7 +23,7 @@ const styles = new StyleSheet.create({
     },
     'header': {
       height: 40,
-      backgroundColor: "#C80435",
+      backgroundColor: "#d01257",
       flexDirection:'row',
       justifyContent:'space-between',            
     },
@@ -37,6 +40,8 @@ const styles = new StyleSheet.create({
       height: ITEM_HEIGHT,
       borderRadius: 10,
       padding: 10,
+      borderWidth: 20,
+      borderColor: '#2A292D'
     },
     'profileImage':{
       position: 'absolute',
@@ -44,14 +49,16 @@ const styles = new StyleSheet.create({
       height: 50,
       borderRadius: 25,
       bottom: 20,
-      right: 20     
+      right: 20,
+      borderWidth: 2,
+      borderColor: '#fff'
     },
     'btn': {
         width:70, 
         height:70, 
         backgroundColor:'#C80435', 
         padding:10, marginRight: 15, 
-        borderColor:'#C80435', 
+        borderColor:'#fff', 
         borderWidth:1, 
         borderRadius: 35, 
         alignContent:'center', 

@@ -5,11 +5,26 @@ import FlatListStyles from './FlatListStyles';
 import FlatListRow from './FlatListRow';
 import useDebounce from '../hooks/useDebounce';
 import _ from 'lodash';
+import { QueryClient, useInfiniteQuery, useQuery, useQueryClient } from 'react-query';
+
 
 import FlatListDetails from './FlatListDetails';
-import useToggle from '../hooks/useToggle';
 
 function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPage, fetchNextPage, isFetchingNextPage}) {
+
+  const _fetchData =  ({queryKey}) =>  {
+    return fetch(`https://api.coincap.io/v2/assets/${queryKey}`).then(async(response) => {
+      const results = await response.json();
+      return { results };    
+    })
+  }
+  
+  const queryClient = useQueryClient();
+  const prefetchTodos = async ({coindID}) => {
+    setCurrentSelectedCoin(coindID);
+    await queryClient.prefetchQuery([`${coindID}`], _fetchData)
+  }
+
     var _FlatListRef = useRef();
     var onEndReachedCalledDuringMomentum = useRef(true);
 
@@ -18,12 +33,14 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
     const [rowSelected, setRowSelected] = useState([])
     const [loadNext, setLoadNext] = useState(0);
     const [showSheet, setShowSheet] = useState(false);
+    const [currentSelectedRow, setCurrentSelectedRow] = useState(null);
+    const [currentSelectedCoin, setCurrentSelectedCoin] = useState(null);
 
   useEffect(() => {
-    console.log(``);
-    console.log(`useEffect-rowSelected Array:`);
-    console.log(rowSelected?.length);
-    console.log(``);
+    // console.log(``);
+    // console.log(`useEffect-rowSelected Array:`);
+    // console.log(rowSelected?.length);
+    // console.log(``);
   }, [rowSelected])
 
     useDebounce(() => fetchNextPage(), 1000, [loadNext])
@@ -49,11 +66,11 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
         []
       )
     
-    const _renderItem = useCallback(({item, index}) => {    
-          var _data =  [];
+    const _getDataForGraph = (valueInt) => {
+      var _data =  [];
 
         const k = 100;
-        var price = item?.priceUsd;        
+        var price = valueInt;        
         
         var range = _.range(price - k/2,price + k/2);
         
@@ -62,16 +79,22 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
         _data = _.slice(range, range.length - slice, range.length );
         _data = [..._data];
 
-
+        return _data;
+    }
+    
+    const _renderItem = useCallback(({item, index}) => {    
+        
         return <FlatListRow 
         item={item} 
         index={index} 
         isScrolling={isScrolling}
         viewIndex={viewIndex}
-        chartData={_data}
+        chartData={_getDataForGraph(item?.priceUsd)}
         rowSelected={rowSelected}
         setRowSelected={setRowSelected}
         setShowSheet={setShowSheet}
+        setCurrentSelectedRow={setCurrentSelectedRow}
+        prefetchTodos={prefetchTodos}
         />
       }, [data])
 
@@ -81,23 +104,10 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
 
   const onViewableItemsChanged = useRef(({ viewableItems, changed }) => {
       let _currentViewIndex = _.last(viewableItems)?.index;
-      
-      // console.log(``);
-      // console.log(`_currentViewIndex: `);
-      // console.log(_currentViewIndex);
-      // console.log(``);
-
       if(_currentViewIndex){
           setViewIndex(_currentViewIndex);
       }
   })
-
-  // console.log(``);
-  // console.log(``);
-  // console.log(`FlatListComponent data:`);
-  // console.log(`data:`);
-  // console.log(data);
-  // console.log(``)
 
     return (
       <View style={FlatListStyles.container}>
@@ -111,7 +121,7 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
                 contentContainerStyle={FlatListStyles.listContainer}
                 ref={_FlatListRef}
                 onViewableItemsChanged={onViewableItemsChanged.current}
-                ListHeaderComponent={() => <FlatListHeader rowSelected={rowSelected} />}
+                ListHeaderComponent={() => <FlatListHeader currentSelectedCoin={currentSelectedCoin} rowSelected={rowSelected} />}
                 keyExtractor={_keyExtractor}
                 renderItem={_renderItem}
                 onEndReachedThreshold={0.5}
@@ -127,7 +137,7 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
                 }} />  
         </>                
         } 
-        <FlatListDetails value={showSheet}/> 
+        {showSheet && <FlatListDetails setShowSheet={setShowSheet} dataObject={currentSelectedRow} value={showSheet} getDataForGraph={_getDataForGraph}/> }
       </View>
     )
 }
