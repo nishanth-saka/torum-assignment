@@ -1,5 +1,5 @@
 import { View, Text, FlatList, FlatListStylesheet, Image, TouchableOpacity } from 'react-native'
-import React, {useCallback, useMemo, useState, Suspense, useRef} from 'react'
+import React, {useCallback, createContext, useState, useContext, useRef} from 'react'
 import { QueryClient, useInfiniteQuery, useQuery, useQueryClient } from 'react-query';
 import FlatListStyles from './FlatListStyles';
 import FlatListComponent from './FlatList';
@@ -17,6 +17,7 @@ const sampleArray = [1,2,3].map((value, index) => {
   return sampleData;
 })
 
+const RowContext = createContext();
 export default function HomeScreen() {
   var _FlatListRef = useRef();
   const [showLoadMore, setLoadMore] = useState(false)

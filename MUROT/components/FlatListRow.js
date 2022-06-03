@@ -1,10 +1,11 @@
-import React, {memo, useCallback, useRef} from 'react'
+import React, {memo, useCallback, useRef, createContext} from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
 import FlatListRowPreviewImage from './FlatListRowPreviewImage'
 import FlatListRowProfileImage from './FlatListRowProfileImage'
 import FlatListStyles from './FlatListStyles'
 import FlatListRowLabels from './FlatListRowLabels';
 import { useEffect } from 'react/cjs/react.production.min'
+import _ from 'lodash';
 
 const propsAreEqual = (preItem, nextItem) => {
   return preItem.item?.priceUsd === nextItem.item?.priceUsd;
@@ -21,17 +22,21 @@ function FlatListRow(props) {
   )
 
   const _rowSelect = (arg1) => {
-    // console.log(``);
-    // console.log(`props:`);
-    // console.log(props?.item);
-    // console.log(``);
+    console.log(``);
+    console.log(`props:`);
+    console.log(props?.item);
+    console.log(``);
+
+    let _rows = props.rowSelected ?? [];
+    _rows.push(props?.item)
+    props.setRowSelected(_.uniqBy([..._rows], 'id'))
   }
 
  
-console.log(``);
-console.log(`item?.price:`);
-console.log(props?.item?.priceUsd);
-console.log(``);
+// console.log(``);
+// console.log(`item?.price:`);
+// console.log(props?.item?.priceUsd);
+// console.log(``);
 
 
     return (      

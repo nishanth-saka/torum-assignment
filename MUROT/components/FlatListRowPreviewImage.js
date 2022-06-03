@@ -10,7 +10,7 @@ export default function FlatListRowPreviewImage(props) {
   // console.log(``);
 
     return(
-        <React.Fragment>
+        <TouchableOpacity>
           
           <Image 
               style={FlatListStyles.previewImage}
@@ -20,6 +20,6 @@ export default function FlatListRowPreviewImage(props) {
             />
             <View style={FlatListStyles.overlay} />
 
-        </React.Fragment>
+        </TouchableOpacity>
       )
 }

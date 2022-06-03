@@ -21,11 +21,12 @@ const styles = new StyleSheet.create({
     'header': {
       height: 40,
       backgroundColor: "#C80435",
-      justifyContent:'center'
+      flexDirection:'row',
+      justifyContent:'space-between',            
     },
     'headerText1': {
       color: "#fff",      
-      fontSize: 20,      
+      padding: 10
     },
     'headerText2': {
       color: "#fff",      

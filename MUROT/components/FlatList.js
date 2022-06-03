@@ -1,4 +1,4 @@
-import React, {useRef, useCallback, useState} from 'react'
+import React, {useRef, useCallback, useState, useEffect} from 'react'
 import { View, Text, FlatList, FlatListStylesheet, Image, TouchableOpacity } from 'react-native'
 import FlatListHeader from './FlatListHeader';
 import FlatListStyles from './FlatListStyles';
@@ -13,10 +13,15 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
 
     const [isScrolling, setIsScrolling] = useState(false);
     const [viewIndex, setViewIndex] = useState(0);
-    
+    const [rowSelected, setRowSelected] = useState([])
     const [loadNext, setLoadNext] = useState(0);
 
-    
+  useEffect(() => {
+    console.log(``);
+    console.log(`rowSelected Array:`);
+    console.log(rowSelected);
+    console.log(``);
+  }, [rowSelected])
 
     useDebounce(() => fetchNextPage(), 1000, [loadNext])
         const _loadMore = () => {
@@ -61,6 +66,8 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
         isScrolling={isScrolling}
         viewIndex={viewIndex}
         chartData={_data}
+        rowSelected={rowSelected}
+        setRowSelected={setRowSelected}
         />
       }, [data])
 
@@ -100,7 +107,7 @@ function FlatListComponent({data, isLoading, isFetched, showLoadMore, hasNextPag
                 contentContainerStyle={FlatListStyles.listContainer}
                 ref={_FlatListRef}
                 onViewableItemsChanged={onViewableItemsChanged.current}
-                ListHeaderComponent={FlatListHeader}
+                ListHeaderComponent={() => <FlatListHeader rowSelected={rowSelected} />}
                 keyExtractor={_keyExtractor}
                 renderItem={_renderItem}
                 onEndReachedThreshold={0.5}

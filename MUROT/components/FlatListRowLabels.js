@@ -21,10 +21,6 @@ function FlatListRowLabels(props) {
         
     var _isGreen = _.first(data) >= _.last(data);
 
-console.log(``);
-console.log(`props?.index: ${props?.item?.priceUsd}`);
-console.log(``);
-
   return (
     <View key={`${props?.index}`} style={FlatListStyles.rowLabels}>
         <Text style={[FlatListStyles.headerText1, {color:  !_isGreen ? '#54D0B8' : '#C80435'}]}>{`#${props?.index}: ${props?.item?.name}`}</Text>
